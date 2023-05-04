@@ -104,4 +104,6 @@
 	<button disabled={active || (timer === off && state === "off")} class="bg-gray-100 w-24 h-12 m-1 disabled:bg-gray-400" on:click={reset}>Reset</button>
 	<button class="bg-gray-100 w-72 h-12 m-1" on:click={() => {active = !active}}>{!active ? "Start" : "Pause"}</button>
 </div>
-
+{#if !active && timer > 6 && state=="off"}
+	<button class="bg-gray-100 w-24 h-12 m-1" on:click={() => {timer = 5; active=true;}}>Countdown</button>
+{/if}
