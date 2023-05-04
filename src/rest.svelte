@@ -41,6 +41,19 @@
 	}
 </script>
 
+<div class="flex m-auto justify-center">
+	<h1 class="text-2xl font-bold text-center text-gray-100">warning:</h1>
+	<select class="m-auto ml-0 mt-2 flex" bind:value={warning}>
+		<option value={0}>none</option>
+		<option value={2.5}>{secsToClock(2.5)}</option>
+		<option value={5}>{secsToClock(5)}</option>
+		<option value={7.5}>{secsToClock(7.5)}</option>
+		<option value={10}>{secsToClock(10)}</option>
+		<option value={12.5}>{secsToClock(12.5)}</option>
+		<option value={15}>{secsToClock(15)}</option>
+	</select>
+</div>
+
 <h1 class="text-2xl font-bold text-center text-gray-100 font-Droid">{topTimer_display}</h1>
 <h1 class="text-9xl font-bold text-center text-gray-100 font-Droid">{timer_display}</h1>
 <div class="flex m-auto justify-center w-96">
@@ -54,6 +67,6 @@
 	<button class="bg-gray-100 w-3/4 h-12 my-1 ml-1" on:click={() => {active = !active}}>{!active ? "Start" : "Pause"}</button>
 </div>
 <div class="flex m-auto justify-center w-96">
-	<button class="bg-gray-100 w-full h-28 mt-56" on:click={restart}>Restart</button>
+	<button class="bg-gray-100 w-full h-28 mt-48" on:click={restart}>Restart</button>
 </div>
 
