@@ -30,13 +30,6 @@
 		}
 	}, 1000)
 
-	function playSound(soundFile) {
-	    const audio = new Audio(soundFile);
-		if (soundOn) {
-			audio.play();
-		}
-	}
-
 	function restart() {
 		reset();
 		active = true;
@@ -50,17 +43,17 @@
 
 <h1 class="text-2xl font-bold text-center text-gray-100 font-Droid">{topTimer_display}</h1>
 <h1 class="text-9xl font-bold text-center text-gray-100 font-Droid">{timer_display}</h1>
-<div class="flex m-auto justify-center">
-	<button class="bg-gray-100 w-20 h-12 m-1" on:click={() => {topTimer = 30; restart()}}>0:30</button>
-	<button class="bg-gray-100 w-20 h-12 m-1" on:click={() => {topTimer = 60; restart()}}>1:00</button>
-	<button class="bg-gray-100 w-20 h-12 m-1" on:click={() => {topTimer = 90; restart()}}>1:30</button>
-	<button class="bg-gray-100 w-20 h-12 m-1" on:click={() => {topTimer = 120; restart()}}>2:00</button>
+<div class="flex m-auto justify-center w-96">
+	<button disabled={active} class="bg-gray-100 w-1/4 h-12 my-1 mr-1 disabled:bg-gray-400" on:click={() => {topTimer = 30; restart()}}>0:30</button>
+	<button disabled={active} class="bg-gray-100 w-1/4 h-12 my-1 mx-1 disabled:bg-gray-400" on:click={() => {topTimer = 60; restart()}}>1:00</button>
+	<button disabled={active} class="bg-gray-100 w-1/4 h-12 my-1 mx-1 disabled:bg-gray-400" on:click={() => {topTimer = 90; restart()}}>1:30</button>
+	<button disabled={active} class="bg-gray-100 w-1/4 h-12 my-1 ml-1 disabled:bg-gray-400" on:click={() => {topTimer = 120; restart()}}>2:00</button>
 </div>
-<div class="flex m-auto justify-center">
-	<button disabled={active || timer === topTimer} class="bg-gray-100 w-24 h-12 m-1 disabled:bg-gray-400" on:click={reset}>Reset</button>
-	<button class="bg-gray-100 w-72 h-12 m-1" on:click={() => {active = !active}}>{!active ? "Start" : "Pause"}</button>
+<div class="flex m-auto justify-center w-96">
+	<button disabled={active || timer === topTimer} class="bg-gray-100 w-[23.6%] h-12 my-1 mr-1 disabled:bg-gray-400" on:click={reset}>Reset</button>
+	<button class="bg-gray-100 w-3/4 h-12 my-1 ml-1" on:click={() => {active = !active}}>{!active ? "Start" : "Pause"}</button>
 </div>
-<div class="flex m-auto justify-center">
-	<button class="bg-gray-100 w-96 h-28" on:click={restart}>Restart</button>
+<div class="flex m-auto justify-center w-96">
+	<button class="bg-gray-100 w-full h-28 mt-56" on:click={restart}>Restart</button>
 </div>
 
