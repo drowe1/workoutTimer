@@ -100,10 +100,12 @@
 </div>
 <h1 class="text-2xl font-bold text-center text-gray-100">{state}</h1>
 <h1 class="text-9xl font-bold text-center text-gray-100 font-Droid">{timer_display}</h1>
-<div class="flex m-auto justify-center">
-	<button disabled={active || (timer === off && state === "off")} class="bg-gray-100 w-24 h-12 m-1 disabled:bg-gray-400" on:click={reset}>Reset</button>
-	<button class="bg-gray-100 w-72 h-12 m-1" on:click={() => {active = !active}}>{!active ? "Start" : "Pause"}</button>
+<div class="flex m-auto justify-center w-96">
+	<button disabled={active || (timer === off && state === "off")} class="bg-gray-100 w-[23.6%] h-12 m-1 disabled:bg-gray-400" on:click={reset}>Reset</button>
+	<button class="bg-gray-100 w-3/4 h-12 m-1" on:click={() => {active = !active}}>{!active ? "Start" : "Pause"}</button>
 </div>
 {#if !active && timer > 6 && state=="off"}
-	<button class="bg-gray-100 w-24 h-12 m-1" on:click={() => {timer = 5; active=true;}}>Countdown</button>
+<div class="flex m-auto w-96">
+	<button class="bg-gray-100 w-[22.9%] h-12 m-1" on:click={() => {timer = 5; active=true;}}>Countdown</button>
+</div>
 {/if}
