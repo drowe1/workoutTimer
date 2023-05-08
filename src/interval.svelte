@@ -23,6 +23,7 @@
 	$: timer_display = secsToClock(timer)
 	let active = false;
 	let soundOn = true;
+	let options = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60]
 
 	setInterval(() => {
 		if (active) {
@@ -33,14 +34,8 @@
 				}
 			} else if (timer === 0) {
 				if (state === "off") {
-					if (soundOn) {
-						start.play();
-					}
 					startOn();
 				} else {
-					if (soundOn) {
-						rest.play();
-					}
 					startOff();
 				}
 			}
@@ -48,6 +43,9 @@
 	}, 1000)
 
 	function startOff() {
+		if (soundOn) {
+			rest.play();
+		}
 		state = "off";
 		timer = off;
 		if (off === 0) {
@@ -56,6 +54,9 @@
 	}
 
 	function startOn() {
+		if (soundOn) {
+			start.play();
+		}
 		state = "on";
 		timer = on;
 		if (on === 0) {
@@ -74,28 +75,16 @@
 <div class="flex m-auto justify-center">
 	<h1 class="text-2xl font-bold text-center text-gray-100">off:</h1>
 	<select class="m-auto ml-0 mt-2 flex" disabled={active} bind:value={off}>
-		<option value={0}>{secsToClock(0)}</option>
-		<option value={5}>{secsToClock(5)}</option>
-		<option value={10}>{secsToClock(10)}</option>
-		<option value={15}>{secsToClock(15)}</option>
-		<option value={20}>{secsToClock(20)}</option>
-		<option value={30}>{secsToClock(30)}</option>
-		<option value={40}>{secsToClock(40)}</option>
-		<option value={50}>{secsToClock(50)}</option>
-		<option value={60}>{secsToClock(60)}</option>
+		{#each options as opt}
+			<option value={opt}>{secsToClock(opt)}</option>
+		{/each}
 	</select>
 
 	<h1 class="text-2xl font-bold text-center text-gray-100">on:</h1>
 	<select class="m-auto ml-0 mt-2 flex" disabled={active} bind:value={on}>
-		<option value={0}>{secsToClock(0)}</option>
-		<option value={5}>{secsToClock(5)}</option>
-		<option value={10}>{secsToClock(10)}</option>
-		<option value={15}>{secsToClock(15)}</option>
-		<option value={20}>{secsToClock(20)}</option>
-		<option value={30}>{secsToClock(30)}</option>
-		<option value={40}>{secsToClock(40)}</option>
-		<option value={50}>{secsToClock(50)}</option>
-		<option value={60}>{secsToClock(60)}</option>
+		{#each options as opt}
+			<option value={opt}>{secsToClock(opt)}</option>
+		{/each}
 	</select>
 </div>
 <h1 class="text-2xl font-bold text-center text-gray-100">{state}</h1>
