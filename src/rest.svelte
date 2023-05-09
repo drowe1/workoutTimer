@@ -7,7 +7,7 @@
 	let warn = new Howl({
 		src: [warnSrc]
 	});
-	let start = new Howl({
+	let startSound = new Howl({
 		src: [startSrc]
 	});
 
@@ -19,6 +19,7 @@
 	let active = false;
 	let soundOn = true;
 	let customSelector = false;
+	let intervalId;
 
 	function isNumber(evt) {
 		evt = (evt) ? evt : window.event;
@@ -28,21 +29,38 @@
 		}
 	}
 
-
-	setInterval(() => {
-		if (active) {
-			timer--;
-			if (timer === warning) {
-				warn.play();
-			} else if (timer === 0) {
-				start.play();
+	function start() {
+		active = true;
+		intervalId = setInterval(() => {
+			if (active) {
+				timer--;
+				if (timer === warning) {
+					warn.play();
+				} else if (timer === 0) {
+					startSound.play();
+				}
 			}
+		}, 1000)
+	}
+
+	function stop() {
+		clearInterval(intervalId);
+		active = false;
+	}
+
+	function toggle() {
+		if (active) {
+			stop();
 		}
-	}, 1000)
+		else{
+			start();
+		}
+	}
 
 	function restart() {
+		clearInterval(intervalId);
 		reset();
-		active = true;
+		start();
 	}
 
 	function reset() {
@@ -75,7 +93,7 @@
 </div>
 <div class="flex m-auto justify-center w-96">
 	<button disabled={active || timer === topTimer} class="bg-gray-100 w-1/4 h-12 my-1 mr-1 disabled:bg-gray-400" on:click={reset}>Reset</button>
-	<button class="bg-gray-100 w-3/4 h-12 my-1 ml-1" on:click={() => {active = !active}}>{!active ? "Start" : "Pause"}</button>
+	<button class="bg-gray-100 w-3/4 h-12 my-1 ml-1" on:click={toggle}>{!active ? "Start" : "Pause"}</button>
 </div>
 
 {#if customSelector}

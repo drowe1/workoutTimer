@@ -11,7 +11,7 @@
 	let warn = new Howl({
 		src: [warnSrc]
 	});
-	let start = new Howl({
+	let startSound = new Howl({
 		src: [startSrc]
 	});
 
@@ -23,24 +23,42 @@
 	$: timer_display = secsToClock(timer)
 	let active = false;
 	let soundOn = true;
-	let options = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 75, 90, 105, 120, 150, 180]
+	let options = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 75, 90, 105, 120, 150, 180];
+	let intervalId;
 
-	setInterval(() => {
-		if (active) {
-			timer--;
-			if (timer === warning && state==="off") {
-				if (soundOn) {
-					warn.play()
-				}
-			} else if (timer === 0) {
-				if (state === "off") {
-					startOn();
-				} else {
-					startOff();
+	function start() {
+		active = true;
+		intervalId = setInterval(() => {
+			if (active) {
+				timer--;
+				if (timer === warning && state==="off") {
+					if (soundOn) {
+						warn.play()
+					}
+				} else if (timer === 0) {
+					if (state === "off") {
+						startOn();
+					} else {
+						startOff();
+					}
 				}
 			}
+		}, 1000)
+	}
+
+	function stop() {
+		clearInterval(intervalId);
+		active = false;
+	}
+
+	function toggle() {
+		if (active) {
+			stop();
 		}
-	}, 1000)
+		else{
+			start();
+		}
+	}
 
 	function startOff() {
 		if (soundOn) {
@@ -55,7 +73,7 @@
 
 	function startOn() {
 		if (soundOn) {
-			start.play();
+			startSound.play();
 		}
 		state = "on";
 		timer = on;
@@ -65,7 +83,7 @@
 	}
 
 	function reset() {
-		active = false;
+		stop();
 		timer = off;
 		state = "off";
 	}
@@ -91,10 +109,10 @@
 <h1 class="text-9xl font-bold text-center text-gray-100 font-Droid">{timer_display}</h1>
 <div class="flex m-auto justify-center w-96">
 	<button disabled={active || (timer === off && state === "off")} class="bg-gray-100 w-[23.6%] h-12 m-1 disabled:bg-gray-400" on:click={reset}>Reset</button>
-	<button class="bg-gray-100 w-3/4 h-12 m-1" on:click={() => {active = !active}}>{!active ? "Start" : "Pause"}</button>
+	<button class="bg-gray-100 w-3/4 h-12 m-1" on:click={toggle}>{!active ? "Start" : "Pause"}</button>
 </div>
 {#if !active && timer > 6 && state=="off"}
 <div class="flex m-auto w-96">
-	<button class="bg-gray-100 w-[22.9%] h-12 m-1" on:click={() => {timer = 5; active=true;}}>Countdown</button>
+	<button class="bg-gray-100 w-[22.9%] h-12 m-1" on:click={() => {timer = 5; start();}}>Countdown</button>
 </div>
 {/if}
