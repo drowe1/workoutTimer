@@ -23,7 +23,7 @@
 	$: timer_display = secsToClock(timer)
 	let active = false;
 	let soundOn = true;
-	let options = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60]
+	let options = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 75, 90, 105, 120, 150, 180]
 
 	setInterval(() => {
 		if (active) {
