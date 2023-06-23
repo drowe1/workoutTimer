@@ -11,7 +11,7 @@
 		src: [startSrc]
 	});
 
-	let topTimer = 120; // The time that the timer will reset to
+	let topTimer = 60; // The time that the timer will reset to
 	$: topTimer_display = secsToClock(topTimer)
 	let warning = 5;
 	let timer = topTimer;

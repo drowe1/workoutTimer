@@ -15,8 +15,8 @@
 		src: [startSrc]
 	});
 
-	let off = 5;
-	let on = 15;
+	let off = 15;
+	let on = 5;
 	let warning = 5;
 	let timer = off;
 	let state = "off"
@@ -91,15 +91,15 @@
 </script>
 
 <div class="flex m-auto justify-center">
-	<h1 class="text-2xl font-bold text-center text-gray-100">off:</h1>
-	<select class="m-auto ml-0 mt-2 flex" disabled={active} bind:value={off}>
+	<h1 class="text-2xl font-bold text-center text-gray-100">on:</h1>
+	<select class="m-auto ml-0 mt-2 flex" disabled={active} bind:value={on}>
 		{#each options as opt}
 			<option value={opt}>{secsToClock(opt)}</option>
 		{/each}
 	</select>
 
-	<h1 class="text-2xl font-bold text-center text-gray-100">on:</h1>
-	<select class="m-auto ml-0 mt-2 flex" disabled={active} bind:value={on}>
+	<h1 class="text-2xl font-bold text-center text-gray-100">off:</h1>
+	<select class="m-auto ml-0 mt-2 flex" disabled={active} bind:value={off}>
 		{#each options as opt}
 			<option value={opt}>{secsToClock(opt)}</option>
 		{/each}
