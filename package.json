@@ -20,6 +20,7 @@
     "vite": "^4.3.2"
   },
   "dependencies": {
+    "favicons": "^7.1.2",
     "gh-pages": "^5.0.0",
     "howler": "^2.2.3"
   }

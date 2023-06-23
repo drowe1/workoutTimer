@@ -3,7 +3,7 @@
 	import Interval from "./interval.svelte";
 	import Rest from "./rest.svelte";
 
-	let mode = "Rest Timer"
+	let mode = "Interval Timer"
 
 </script>
 
