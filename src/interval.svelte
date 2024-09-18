@@ -15,8 +15,8 @@
 		src: [startSrc]
 	});
 
-	let off = 15;
-	let on = 5;
+	let off = 5;
+	let on = 15;
 	let warning = 5;
 	let timer = off;
 	let state = "off"
