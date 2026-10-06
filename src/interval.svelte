@@ -113,7 +113,7 @@
 	</select>
 </div>
 <h1 class="text-2xl font-bold text-center text-gray-100">{state}</h1>
-<h1 class="text-9xl font-bold text-center text-gray-100 font-Droid">{timer_display}</h1>
+<h1 class="text-9xl font-bold text-center text-gray-100 font-Droid tabular-nums">{timer_display}</h1>
 <div class="flex m-auto justify-center w-96">
 	<button disabled={active || (timer === off && state === "off")} class="ui-btn w-[23.6%] h-12 m-1" on:click={reset}>Reset</button>
 	<button class="ui-btn w-3/4 h-12 m-1" on:click={toggle}>{!active ? "Start" : "Pause"}</button>

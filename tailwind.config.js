@@ -5,7 +5,7 @@ export default {
 		extend: {
 			fontFamily: {
 			'Russo-One': ['Russo One'],
-			'Droid': ['DroidSansMono Nerd Font Regular'],
+			'Droid': ['DroidSansMono Nerd Font Regular', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Consolas', 'monospace'],
 		},
 
 		},

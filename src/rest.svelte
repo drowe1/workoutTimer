@@ -89,8 +89,8 @@
 	</select>
 </div>
 
-<h1 class="text-9xl font-bold text-center text-gray-100 font-Droid">{timer_display}</h1>
-<h1 class="text-2xl font-bold text-center text-gray-100 font-Droid">{topTimer_display}</h1>
+<h1 class="text-9xl font-bold text-center text-gray-100 font-Droid tabular-nums">{timer_display}</h1>
+<h1 class="text-2xl font-bold text-center text-gray-100 font-Droid tabular-nums">{topTimer_display}</h1>
 <div class="flex m-auto justify-center w-96">
 	<button disabled={active} class="ui-btn w-1/5 h-12 my-1 mr-1" on:click={() => {topTimer = 30; restart()}}>0:30</button>
 	<button disabled={active} class="ui-btn w-1/5 h-12 my-1 mx-1" on:click={() => {topTimer = 60; restart()}}>1:00</button>
