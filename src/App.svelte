@@ -9,7 +9,7 @@
 
 <main>
 	<h1 class="text-3xl font-bold text-center text-gray-100">Workout Timer</h1>
-	<select class="m-auto mt-2 flex" bind:value={mode}>
+	<select class="ui-select m-auto mt-3 block text-center" bind:value={mode}>
 		<option value="Rest Timer">Rest Timer</option>
 		<option value="Interval Timer">Interval Timer</option>
 	</select>

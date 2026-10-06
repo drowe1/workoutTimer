@@ -4,6 +4,7 @@
 	import warnSrc from './lib/assets/blip.mp3'
 	import startSrc from './lib/assets/start.mp3'
 	import {Howl} from 'howler';
+	import { onDestroy } from 'svelte';
 
 	let rest = new Howl({
 		src: [restSrc]
@@ -45,6 +46,12 @@
 			}
 		}, 1000)
 	}
+
+	// Switching modes unmounts this component; make sure nothing keeps ticking
+	onDestroy(() => {
+		clearInterval(intervalId);
+		active = false;
+	});
 
 	function stop() {
 		clearInterval(intervalId);
@@ -90,16 +97,16 @@
 
 </script>
 
-<div class="flex m-auto justify-center">
-	<h1 class="text-2xl font-bold text-center text-gray-100">on:</h1>
-	<select class="m-auto ml-0 mt-2 flex" disabled={active} bind:value={on}>
+<div class="flex flex-wrap items-center justify-center gap-x-2 gap-y-2 mt-4">
+	<span class="text-2xl font-bold text-gray-100">on:</span>
+	<select class="ui-select" disabled={active} bind:value={on}>
 		{#each options as opt}
 			<option value={opt}>{secsToClock(opt)}</option>
 		{/each}
 	</select>
 
-	<h1 class="text-2xl font-bold text-center text-gray-100">off:</h1>
-	<select class="m-auto ml-0 mt-2 flex" disabled={active} bind:value={off}>
+	<span class="text-2xl font-bold text-gray-100 ml-4">off:</span>
+	<select class="ui-select" disabled={active} bind:value={off}>
 		{#each options as opt}
 			<option value={opt}>{secsToClock(opt)}</option>
 		{/each}
@@ -108,11 +115,11 @@
 <h1 class="text-2xl font-bold text-center text-gray-100">{state}</h1>
 <h1 class="text-9xl font-bold text-center text-gray-100 font-Droid">{timer_display}</h1>
 <div class="flex m-auto justify-center w-96">
-	<button disabled={active || (timer === off && state === "off")} class="bg-gray-100 w-[23.6%] h-12 m-1 disabled:bg-gray-400" on:click={reset}>Reset</button>
-	<button class="bg-gray-100 w-3/4 h-12 m-1" on:click={toggle}>{!active ? "Start" : "Pause"}</button>
+	<button disabled={active || (timer === off && state === "off")} class="ui-btn w-[23.6%] h-12 m-1" on:click={reset}>Reset</button>
+	<button class="ui-btn w-3/4 h-12 m-1" on:click={toggle}>{!active ? "Start" : "Pause"}</button>
 </div>
 {#if !active && timer > 6 && state=="off"}
 <div class="flex m-auto w-96">
-	<button class="bg-gray-100 w-[22.9%] h-12 m-1" on:click={() => {timer = 5; start();}}>Countdown</button>
+	<button class="ui-btn w-[22.9%] h-12 m-1" on:click={() => {timer = 5; start();}}>Countdown</button>
 </div>
 {/if}
