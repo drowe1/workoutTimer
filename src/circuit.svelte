@@ -171,7 +171,7 @@
 
 	function tick() {
 		timer--;
-		if (phase === "work" && timer === WARNING && selected.rows[idx].duration > WARNING) {
+		if (phase === "rest" && timer === WARNING && selected.rows[idx + 1].rest >= 15) {
 			warn.play();
 		}
 		if (timer > 0) return;
@@ -180,7 +180,8 @@
 			idx = 0;
 			startWork();
 		} else if (phase === "work") {
-			const rest = selected.rows[idx].rest;
+			// Rest comes before an exercise, so the next row's rest is what plays now
+			const rest = selected.rows[idx + 1]?.rest;
 			if (idx === selected.rows.length - 1) {
 				finish();
 			} else if (rest > 0) {
@@ -232,7 +233,7 @@
 		{/if}
 	</div>
 {:else if editing}
-	<div class="flex flex-col mx-4 mt-3 max-w-md m-auto" style="height: calc(100dvh - 7rem)">
+	<div class="flex flex-col mx-auto w-full px-4 mt-3 max-w-md" style="height: calc(100dvh - 7rem)">
 		<div class="flex items-center gap-2">
 			<input class="ui-select flex-1 min-w-0 !cursor-text" type="text" placeholder="Circuit name" bind:value={draft.name} />
 			<button class="ui-btn w-10 h-10 flex items-center justify-center shrink-0" title="Stop editing" aria-label="Stop editing" on:click={stopEditing}>
@@ -282,7 +283,7 @@
 	</div>
 
 	{#if selected}
-		<div class="flex flex-col mx-4 mt-4 max-w-md m-auto" style="height: calc(100dvh - 11rem)">
+		<div class="flex flex-col mx-auto w-full px-4 mt-4 max-w-md" style="height: calc(100dvh - 11rem)">
 			<div class="grid grid-cols-[1fr_3.5rem_3.5rem] gap-x-2 text-sm text-gray-400 px-2">
 				<span>Exercise</span><span class="text-center">Dur.</span><span class="text-center">Rest</span>
 			</div>
