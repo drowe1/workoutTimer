@@ -4,7 +4,7 @@
 	import warnSrc from './lib/assets/blip.mp3'
 	import startSrc from './lib/assets/start.mp3'
 	import {Howl} from 'howler';
-	import { onDestroy, onMount } from 'svelte';
+	import { onDestroy, onMount, tick as nextTick } from 'svelte';
 
 	// True while the circuit is being edited or run, so the parent can hide the timer type dropdown
 	export let hideMode = false;
@@ -62,6 +62,8 @@
 	$: allCircuits = [...presets, ...circuits];
 	$: selected = allCircuits.find(c => c.id === selectedId);
 	$: hideMode = editing || running;
+	// The first row's rest is ignored, so it isn't counted
+	$: totalMinutes = selected ? Math.round(selected.rows.reduce((sum, r, i) => sum + r.duration + (i ? r.rest : 0), 0) / 60) : 0;
 	$: current = running && selected ? selected.rows[idx] : null;
 	$: upcoming = running && selected ? selected.rows[phase === "countdown" ? 0 : idx + 1] : null;
 
@@ -105,8 +107,11 @@
 		draft = null;
 	}
 
-	function addRow() {
+	async function addRow() {
 		draft.rows = [...draft.rows, newRow()];
+		await nextTick();
+		const inputs = listEl.querySelectorAll('[data-row] input[type="text"]');
+		inputs[inputs.length - 1].focus();
 	}
 
 	function removeRow(i) {
@@ -286,10 +291,12 @@
 	</div>
 
 	{#if selected}
-		<div class="flex flex-col mx-auto w-full px-4 mt-4 max-w-md" style="height: calc(100dvh - 11rem)">
+		<div class="flex flex-col mx-auto w-full px-4 mt-4 max-w-md" style="height: calc(100dvh - 13rem)">
+			<div class="text-center text-lg font-semibold text-gray-100 mb-2">Total: {totalMinutes} min</div>
 			<div class="grid grid-cols-[1fr_3.5rem_3.5rem] gap-x-2 text-sm text-gray-400 px-2">
 				<span>Exercise</span><span class="text-center">Dur.</span><span class="text-center">Rest</span>
 			</div>
+			{#key selectedId}
 			<div class="flex-1 min-h-0 overflow-y-auto mt-1 rounded-lg bg-gray-700">
 				{#each selected.rows as row}
 					<div class="grid grid-cols-[1fr_3.5rem_3.5rem] gap-x-2 px-2 py-2 border-b border-gray-600 last:border-0 text-gray-100">
@@ -299,6 +306,7 @@
 					</div>
 				{/each}
 			</div>
+			{/key}
 			<button class="ui-btn w-full h-12 mt-3" disabled={!selected.rows.length} on:click={begin}>Start</button>
 		</div>
 	{:else}
