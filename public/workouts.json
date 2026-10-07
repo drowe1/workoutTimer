@@ -45,6 +45,19 @@
         {"name": "Quad Stretch","duration": 15,"rest": 10},
         {"name": "Quad Stretch","duration": 15,"rest": 3}
       ]
+    },
+    {
+      "name": "Arm Stretch",
+      "rows": [
+        {"name": "Arm Swings","duration": 15,"rest": 0},
+        {"name": "Shoulder Stretch","duration": 15,"rest": 1},
+        {"name": "Shoulder Stretch","duration": 15,"rest": 2},
+        {"name": "Band Over and Back","duration": 15,"rest": 8},
+        {"name": "Wall Overhead Reach","duration": 15,"rest": 10},
+        {"name": "Tricep Stretch","duration": 15,"rest": 3},
+        {"name": "Tricep Stretch","duration": 15,"rest": 3},
+        {"name": "Pec Stretch","duration": 15,"rest": 5}
+      ]
     }
   ]
 }
