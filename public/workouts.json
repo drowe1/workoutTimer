@@ -23,6 +23,28 @@
         {"name": "Alternating Feet Together Crunches", "duration": 25, "rest": 0},
         {"name": "Bicycle Crunches with Tempo Changes", "duration": 60, "rest": 2}
       ]
+    },
+    {
+      "id": 1791391235789,
+      "name": "Leg Stretch",
+      "rows": [
+        {"name": "Hamstring Stretch","duration": 15,"rest": 0},
+        {"name": "Hamstring Stretch Width 2","duration": 15,"rest": 3},
+        {"name": "Hamstring Stretch Widest","duration": 15,"rest": 3},
+        {"name": "Cobra","duration": 15,"rest": 5},
+        {"name": "Push it Back","duration": 15,"rest": 2},
+        {"name": "Hip Flexor","duration": 15,"rest": 7},
+        {"name": "Hip Flexor","duration": 15,"rest": 4},
+        {"name": "Calves","duration": 15,"rest": 3},
+        {"name": "Calves","duration": 15,"rest": 2},
+        {"name": "Triangle","duration": 15,"rest": 4},
+        {"name": "Triangle","duration": 15,"rest": 3},
+        {"name": "Butterfly","duration": 25,"rest": 4},
+        {"name": "Single Leg Hamstring","duration": 15,"rest": 2},
+        {"name": "Single Leg Hamstring","duration": 15,"rest": 3},
+        {"name": "Quad Stretch","duration": 15,"rest": 10},
+        {"name": "Quad Stretch","duration": 15,"rest": 3}
+      ]
     }
   ]
 }
