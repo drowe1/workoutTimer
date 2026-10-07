@@ -232,7 +232,7 @@
 		{:else}
 			<h1 class="text-9xl font-bold text-center text-gray-100 font-Droid tabular-nums">{secsToClock(timer)}</h1>
 			<h2 class="text-3xl font-bold text-center text-gray-100 mt-6 h-10">
-				{#if phase === "countdown"}Get ready{:else if phase === "rest"}Rest{:else}{current.name}{/if}
+				{#if phase === "countdown"}Get ready{:else if phase === "rest"}{upcoming.rest >= 20 ? "Rest" : ""}{:else}{current.name}{/if}
 			</h2>
 			<h3 class="text-2xl text-center text-gray-300 mt-10 h-8">
 				{#if upcoming}Next: {upcoming.name}{/if}
