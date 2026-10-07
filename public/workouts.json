@@ -1,0 +1,28 @@
+{
+  "workouts": [
+    {
+      "name": "10 Minute Core Strength",
+      "rows": [
+        {"name": "Tall Plank", "duration": 30, "rest": 0},
+        {"name": "Bird Dogs", "duration": 30, "rest": 2},
+        {"name": "Dead Bugs", "duration": 30, "rest": 5},
+        {"name": "Towel Pass", "duration": 30, "rest": 2},
+        {"name": "Tall Plank", "duration": 30, "rest": 5},
+        {"name": "Bird Dogs", "duration": 30, "rest": 2},
+        {"name": "Dead Bugs", "duration": 30, "rest": 5},
+        {"name": "Pass", "duration": 30, "rest": 2},
+        {"name": "Crunches", "duration": 25, "rest": 45},
+        {"name": "Alternating Crunches", "duration": 25, "rest": 0},
+        {"name": "Side Crunches", "duration": 15, "rest": 2},
+        {"name": "Side Crunches", "duration": 15, "rest": 2},
+        {"name": "Legs Up Crunches", "duration": 15, "rest": 3},
+        {"name": "Alternating Legs Up Crunches", "duration": 15, "rest": 0},
+        {"name": "Hinge", "duration": 45, "rest": 5},
+        {"name": "Russian Twists", "duration": 25, "rest": 0},
+        {"name": "Feet Together Crunches", "duration": 25, "rest": 5},
+        {"name": "Alternating Feet Together Crunches", "duration": 25, "rest": 0},
+        {"name": "Bicycle Crunches with Tempo Changes", "duration": 60, "rest": 2}
+      ]
+    }
+  ]
+}

@@ -4,7 +4,7 @@
 	import warnSrc from './lib/assets/blip.mp3'
 	import startSrc from './lib/assets/start.mp3'
 	import {Howl} from 'howler';
-	import { onDestroy } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 
 	// True while the circuit is being edited or run, so the parent can hide the timer type dropdown
 	export let hideMode = false;
@@ -20,21 +20,23 @@
 	let nextId = 1;
 	const newRow = (name = "", duration = 30, rest = 0) => ({ id: nextId++, name, duration, rest });
 
+	// Preloaded workouts come from workouts.json next to the app; they are never saved or edited
+	let presets = [];
+	onMount(async () => {
+		try {
+			const res = await fetch(`${import.meta.env.BASE_URL}workouts.json`, { cache: "no-cache" });
+			const data = await res.json();
+			presets = data.workouts.map(w => ({ id: `preset:${w.name}`, name: w.name, rows: w.rows, builtin: true }));
+		} catch (e) {}
+	});
+
 	function load() {
 		try {
 			const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
-			if (Array.isArray(saved)) return saved;
+			// Early versions stored a sample copy of the core workout; it's preloaded now
+			if (Array.isArray(saved)) return saved.filter(c => !(c.id === 1 && c.name === "10 Minute Core Strength"));
 		} catch (e) {}
-		return [{
-			id: 1,
-			name: "10 Minute Core Strength",
-			rows: [
-				{ name: "Tall Plank", duration: 30, rest: 0 },
-				{ name: "Bird Dogs", duration: 30, rest: 2 },
-				{ name: "Dead Bugs", duration: 30, rest: 5 },
-				{ name: "Med Ball Pass", duration: 30, rest: 2 },
-			],
-		}];
+		return [];
 	}
 
 	function save() {
@@ -57,7 +59,8 @@
 	let active = false;
 	let intervalId;
 
-	$: selected = circuits.find(c => c.id === selectedId);
+	$: allCircuits = [...presets, ...circuits];
+	$: selected = allCircuits.find(c => c.id === selectedId);
 	$: hideMode = editing || running;
 	$: current = running && selected ? selected.rows[idx] : null;
 	$: upcoming = running && selected ? selected.rows[phase === "countdown" ? 0 : idx + 1] : null;
@@ -271,11 +274,11 @@
 	<div class="flex items-center justify-center gap-2 mt-3">
 		<select class="ui-select" bind:value={selectedId}>
 			<option value="">Select Workout</option>
-			{#each circuits as c}
+			{#each allCircuits as c}
 				<option value={c.id}>{c.name}</option>
 			{/each}
 		</select>
-		{#if selected}
+		{#if selected && !selected.builtin}
 			<button class="ui-btn w-10 h-10 flex items-center justify-center" title="Edit" aria-label="Edit circuit" on:click={edit}>
 				<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16v4z"/><path d="M13.5 6.5l4 4"/></svg>
 			</button>
