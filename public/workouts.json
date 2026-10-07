@@ -10,7 +10,7 @@
         {"name": "Tall Plank", "duration": 30, "rest": 5},
         {"name": "Bird Dogs", "duration": 30, "rest": 2},
         {"name": "Dead Bugs", "duration": 30, "rest": 5},
-        {"name": "Pass", "duration": 30, "rest": 2},
+        {"name": "Towel Pass", "duration": 30, "rest": 2},
         {"name": "Crunches", "duration": 25, "rest": 45},
         {"name": "Alternating Crunches", "duration": 25, "rest": 0},
         {"name": "Side Crunches", "duration": 15, "rest": 2},
