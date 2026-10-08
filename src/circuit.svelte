@@ -271,7 +271,7 @@
 		<div class="flex gap-2 my-2">
 			<button class="ui-btn flex-1 h-12" disabled>Start</button>
 			{#if !isNew}
-				<button class="ui-btn px-4 h-12" on:click={remove}>Delete</button>
+				<button class="ui-btn px-4 h-12 !bg-red-600 !text-white hover:!bg-red-500 active:!bg-red-700" on:click={remove}>Delete</button>
 			{/if}
 		</div>
 	</div>
