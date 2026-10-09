@@ -61,7 +61,7 @@
 
 	$: allCircuits = [...presets, ...circuits];
 	$: selected = allCircuits.find(c => c.id === selectedId);
-	$: hideMode = editing || running;
+	$: hideMode = editing || running || exporting;
 	// The first row's rest is ignored, so it isn't counted
 	$: totalMinutes = selected ? Math.round(selected.rows.reduce((sum, r, i) => sum + r.duration + (i ? r.rest : 0), 0) / 60) : 0;
 	$: current = running && selected ? selected.rows[idx] : null;
@@ -105,6 +105,55 @@
 		save();
 		editing = false;
 		draft = null;
+	}
+
+	// Export only the user's own circuits, in the same format as workouts.json
+	let exporting = false;
+	let exportIds = [];
+
+	function openExport() {
+		exportIds = [];
+		exporting = true;
+	}
+
+	function toggleExport(id) {
+		exportIds = exportIds.includes(id) ? exportIds.filter(x => x !== id) : [...exportIds, id];
+	}
+
+	function exportCircuits() {
+		const data = { workouts: circuits.filter(c => exportIds.includes(c.id)).map(c => ({ name: c.name, rows: c.rows })) };
+		const url = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], { type: "application/json" }));
+		const a = document.createElement("a");
+		a.href = url;
+		a.download = "my-workouts.json";
+		a.click();
+		URL.revokeObjectURL(url);
+		exporting = false;
+	}
+
+	let importEl;
+
+	async function importCircuits(e) {
+		const file = e.target.files[0];
+		e.target.value = "";
+		if (!file) return;
+		try {
+			const data = JSON.parse(await file.text());
+			const list = Array.isArray(data) ? data : data.workouts;
+			const imported = list.map((w, i) => ({
+				id: Date.now() + i,
+				name: String(w.name ?? "").trim() || "Untitled circuit",
+				rows: w.rows
+					.filter(r => String(r.name ?? "").trim())
+					.map(r => ({ name: String(r.name).trim(), duration: Math.max(1, Math.round(+r.duration || 0)), rest: Math.max(0, Math.round(+r.rest || 0)) })),
+			}));
+			if (!imported.length) throw new Error("empty");
+			circuits = [...circuits, ...imported];
+			selectedId = imported[0].id;
+			save();
+		} catch (err) {
+			alert("Couldn't import that file. Choose a workouts file exported from this app.");
+		}
 	}
 
 	async function addRow() {
@@ -240,6 +289,23 @@
 			<button class="ui-btn w-96 max-w-full h-12 mt-24" on:click={active ? pause : resume}>{active ? "Pause" : "Resume"}</button>
 		{/if}
 	</div>
+{:else if exporting}
+	<div class="flex flex-col mx-auto w-full px-4 mt-3 max-w-md" style="height: calc(100dvh - 7rem)">
+		<div class="text-center text-lg font-semibold text-gray-100 mb-2">Export workouts</div>
+		<div class="flex-1 min-h-0 overflow-y-auto rounded-lg bg-gray-700">
+			{#each allCircuits as c (c.id)}
+				<label class="flex items-center gap-3 px-3 py-3 border-b border-gray-600 last:border-0 {c.builtin ? 'text-gray-500 cursor-not-allowed' : 'text-gray-100 cursor-pointer'}" title={c.builtin ? "Built-in workouts are not exportable" : ""}>
+					<input type="checkbox" class="w-5 h-5 {c.builtin ? 'cursor-not-allowed' : ''}" disabled={c.builtin} checked={exportIds.includes(c.id)} on:change={() => toggleExport(c.id)} />
+					<span>{c.name}</span>
+				</label>
+			{/each}
+		</div>
+		<div class="flex gap-2 my-2">
+			<button class="ui-btn px-4 h-12" on:click={() => exportIds = circuits.map(c => c.id)}>Select all</button>
+			<button class="ui-btn flex-1 h-12" disabled={!exportIds.length} on:click={exportCircuits}>Export</button>
+			<button class="ui-btn px-4 h-12" on:click={() => exporting = false}>Cancel</button>
+		</div>
+	</div>
 {:else if editing}
 	<div class="flex flex-col mx-auto w-full px-4 mt-3 max-w-md" style="height: calc(100dvh - 7rem)">
 		<div class="flex items-center gap-2">
@@ -288,6 +354,13 @@
 				<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16v4z"/><path d="M13.5 6.5l4 4"/></svg>
 			</button>
 		{/if}
+		<button class="ui-btn w-10 h-10 flex items-center justify-center" title="Export my workouts" aria-label="Export my workouts" disabled={!circuits.length} on:click={openExport}>
+			<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V4M7.5 8.5L12 4l4.5 4.5M5 14v5h14v-5"/></svg>
+		</button>
+		<button class="ui-btn w-10 h-10 flex items-center justify-center" title="Import workouts" aria-label="Import workouts" on:click={() => importEl.click()}>
+			<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7.5 10.5L12 15l4.5-4.5M5 14v5h14v-5"/></svg>
+		</button>
+		<input bind:this={importEl} type="file" accept="application/json,.json" class="hidden" on:change={importCircuits} />
 	</div>
 
 	{#if selected}
