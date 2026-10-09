@@ -315,6 +315,11 @@
 				<svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg>
 			</button>
 		</div>
+		{#if isNew}
+			<p class="mt-3 px-3 py-2 rounded-lg bg-yellow-900/40 text-yellow-200 text-sm" role="alert">
+				Warning: this circuit is stored locally in your browser. It will be lost if you clear your browser data. Use Export to keep a backup.
+			</p>
+		{/if}
 
 		<div class="grid grid-cols-[1.5rem_1fr_3.5rem_3.5rem_1.5rem] gap-x-2 text-sm text-gray-400 mt-4 px-1">
 			<span></span><span>Exercise</span><span class="text-center">Dur.</span><span class="text-center">Rest</span><span></span>
