@@ -16,7 +16,7 @@
 	$: topTimer_display = secsToClock(topTimer)
 	let warning = 5;
 	let timer = topTimer;
-	$: timer_display = timer>0 ? secsToClock(timer) : secsToClock(-timer)
+	$: timer_display = timer>0 ? secsToClock(timer) : "+"+secsToClock(-timer)
 	let active = false;
 	let soundOn = true;
 	let customSelector = false;
