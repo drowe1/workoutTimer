@@ -4,7 +4,7 @@
 	import Rest from "./rest.svelte";
 	import Circuit from "./circuit.svelte";
 
-	let mode = "Interval Timer"
+	let mode = "Circuit Timer"
 	let hideMode = false;
 
 </script>
